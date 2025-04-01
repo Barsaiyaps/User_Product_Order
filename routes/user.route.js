@@ -14,6 +14,8 @@ userRoute.get("/get-user", async (req, res) => {
 
 userRoute.get("/get-user/:id", async (req, res) => {
     try {
+
+        
         const data = await userModel.findById(req.params.id).populate("orders");
         res.send(data);
     } catch (error) {
