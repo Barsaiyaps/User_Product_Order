@@ -12,6 +12,24 @@ userRoute.get("/get-user", async (req, res) => {
     }
 });
 
+userRoute.get("/get-user/:id", async (req, res) => {
+    try {
+        const data = await userModel.findById(req.params.id).populate("orders");
+        res.send(data);
+    } catch (error) {
+        res.send(error);
+    }
+});
+
+userRoute.delete("/delete-user/:id", async (req, res) => {
+    try {
+        const data = await userModel.findByIdAndDelete(req.params.id);
+        res.send(data);
+    } catch (error) {
+        res.send(error);
+    }
+});
+
 userRoute.post("/add-user", async (req, res) => {
     try {
         const {name,email,password }=req.body

@@ -1,30 +1,26 @@
-const mongoose = require("mongoose");   
+const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
    {
-      name: {
-         type: String,
-         required: true,
-      },
-      email: {
-         type: String,
-         required: true,
-         unique: true,
-      },
-      password: {
-         type: String,
-         required: true,
-      }
+      name: { type: String, required: true },
+      email: { type: String, required: true, unique: true },
+      password: { type: String, required: true }
+   },
+   {
+      toJSON: { virtuals: true },   // Allow virtuals in JSON output  ----very important
+      toObject: { virtuals: true }, // Allow virtuals in Object output   ---veryimportant
+      versionKey: false
+   }
+);
 
-   } 
-)
+// Virtual field for user's orders
+userSchema.virtual("orders", {
+   ref: "Order",
+   localField: "_id",
+   foreignField: "userId"
+});
 
-userSchema.virtual("orders",{
-   ref: "Order",                    // Referencing the Order model
-   localField: "_id",               // `_id` in User model
-   foreignField: "userId"           // `userId` in Order model
-})
 
-const userModel = mongoose.model("User", userSchema);    
 
-module.exports = userModel ;
+const userModel = mongoose.model("User", userSchema);
+module.exports = userModel;
