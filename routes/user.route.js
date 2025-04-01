@@ -1,6 +1,7 @@
 const userModel = require("../models/user.model");
 const express = require("express");
 const userRoute = express.Router();
+const bcrypt = require("bcrypt");
 
 userRoute.get("/get-user", async (req, res) => {
     try {
@@ -13,13 +14,15 @@ userRoute.get("/get-user", async (req, res) => {
 
 userRoute.post("/add-user", async (req, res) => {
     try {
-        console.log(req.body);
-        const data = new userModel(req.body);
+        const {name,email,password }=req.body
+        const hashedPassword = await bcrypt.hash(password, 10);
+        console.log({name,email,hashedPassword});
+        const data = new userModel({name,email,password:hashedPassword});
         console.log(data);
         await data.save();
         await res.send("New User Added Successfully");
     } catch (error) {
-        res.send(error);
+        res.send({msg:"Something went wrong",error});
     }
 });
 

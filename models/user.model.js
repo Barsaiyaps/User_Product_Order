@@ -25,13 +25,6 @@ userSchema.virtual("orders",{
    foreignField: "userId"           // `userId` in Order model
 })
 
-userSchema.virtual("cart",{
-   ref: "Cart",
-   localField: "_id",
-   foreignField: "userId"
-})
-
-
 const userModel = mongoose.model("User", userSchema);    
 
-module.exports = { userModel };
+module.exports = userModel ;
