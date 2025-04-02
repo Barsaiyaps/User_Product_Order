@@ -15,10 +15,7 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'),
 app.use(morgan("combined", { stream: accessLogStream  }));
 
 app.use(express.json());
-app.use(cors({origin:'http://localhost:5173',  //Replace with the acutal origin of your frontend
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],  //Allowed HTTP methods
-    credentials: true                             // If you need cookies or authentication
-}));
+app.use(cors());
 
 app.use("/myapp", userRoute);
 app.use("/myapp", productRoute);
