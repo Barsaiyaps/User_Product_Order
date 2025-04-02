@@ -5,7 +5,7 @@ const fs = require('fs')
 const path = require('path')
 const cors = require("cors");
 const morgan = require("morgan");
-const dbConnection = require("./dbConnection");
+const dbConnection = require("./dbConnection"); 
 const PORT = 5000;
 
 const userRoute = require("./routes/user.route");
